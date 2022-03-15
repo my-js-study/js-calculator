@@ -80,15 +80,6 @@ describe('추가 요구사항', () => {
     cy.visit('http://127.0.0.1:5500/index.html');
   });
 
-  it('초기 화면에 operator를 클릭하면 alert창을 호출한다.', () => {
-    cy.clickOperation('+');
-
-    cy.on('window:alert', (text) => {
-      expect(text).to.contains(ERROR_MESSAGE.NO_NUMBER);
-    });
-    cy.get('#total').should('have.text', '0');
-  });
-
   it('음수 결과값에서 소수점을 버릴 때에는 버림이 아닌 올림을 한다.', () => {
     cy.clickOperation('-');
     cy.clickDigit('9');

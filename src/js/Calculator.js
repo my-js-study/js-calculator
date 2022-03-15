@@ -33,11 +33,6 @@ export default class Calaulator {
     const totalValue = total.textContent;
     const operationValue = event.target.textContent;
 
-    if (totalValue === '0') {
-      alert(ERROR_MESSAGE.NO_NUMBER);
-      return;
-    }
-
     if (operationValue === OPERATORS.EQUAL) {
       const calculatingTargets = this.getCalculatingTargets(totalValue);
       const operation = this.getOperator(totalValue);
