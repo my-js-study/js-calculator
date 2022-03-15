@@ -4,28 +4,22 @@ import { on, qs, qsAll } from './helpers.js';
 export default class Calaulator {
   constructor() {
     this.total = qs('#total');
-    this.digits = qsAll('.digit');
-    this.operations = qsAll('.operation');
+    this.digits = qs('.digits');
+    this.operations = qs('.operations');
     this.ac = qs('.modifier');
 
-    this.intializeButtons();
+    this.bindEvents();
   }
 
-  intializeButtons() {
-    this.handleClickDigits();
-    this.handleClickOperators();
-    this.handleClickAC();
+  bindEvents() {
+    on(this.digits, 'click', this.handleClickDigits.bind(this))
+    on(this.operations, 'click', this.handleClickOperations.bind(this));
+    on(this.ac, 'click', this.handleClickAC.bind(this));
   }
 
-  handleClickDigits() {
-    this.digits.forEach((element) => {
-      on(element, 'click', () => this.handleClickDigitHandler(element));
-    });
-  }
-
-  handleClickDigitHandler(element) {
+  handleClickDigits(event) {
     const totalValue = total.innerText;
-    const digitValue = element.innerText;
+    const digitValue = event.target.innerText;
 
     if (this.checkOverThreeDigits(totalValue, digitValue)) {
       alert(ERROR_MESSAGE.OVER_THREE_DIGITS);
@@ -35,15 +29,9 @@ export default class Calaulator {
     total.innerText = totalValue === '0' ? digitValue : totalValue + digitValue;
   }
 
-  handleClickOperators() {
-    this.operations.forEach((element) => {
-      on(element, 'click', () => this.handleClickOperatorHandler(element));
-    });
-  }
-
-  handleClickOperatorHandler(element) {
+  handleClickOperations(event) {
     const totalValue = total.innerText;
-    const operationValue = element.innerText;
+    const operationValue = event.target.innerText;
 
     if (totalValue === '0') {
       alert(ERROR_MESSAGE.NO_NUMBER);
@@ -62,7 +50,7 @@ export default class Calaulator {
   }
 
   handleClickAC() {
-    on(this.ac, 'click', () => (total.innerText = '0'));
+    total.innerText = '0'
   }
 
   calculate(calculatingTargets, operation) {
