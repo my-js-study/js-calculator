@@ -1,12 +1,12 @@
 import { ERROR_MESSAGE, MAX_DIGITS, OPERATORS } from './constants.js';
-import { on, qs, qsAll } from './helpers.js';
+import { on, $ } from './helpers.js';
 
 export default class Calaulator {
   constructor() {
-    this.total = qs('#total');
-    this.digits = qs('.digits');
-    this.operations = qs('.operations');
-    this.ac = qs('.modifier');
+    this.total = $('#total');
+    this.digits = $('.digits');
+    this.operations = $('.operations');
+    this.ac = $('.modifier');
 
     this.bindEvents();
   }
