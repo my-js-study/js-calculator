@@ -102,7 +102,6 @@ function Calculator() {
   };
 
   function getCalculatingTargets(totalValue) {
-    console.log(totalValue);
     const eachNumbers = totalValue.split(/[X+-/_]/);
 
     if (totalValue[0] === OPERATORS.SUBTRACT) {
