@@ -88,4 +88,14 @@ describe('추가 요구사항', () => {
     });
     cy.get('#total').should('have.text', '0');
   });
+
+  it('음수 결과값에서 소수점을 버릴 때에는 버림이 아닌 올림을 한다.', () => {
+    cy.clickOperation('-');
+    cy.clickDigit('9');
+    cy.clickOperation('=');
+    cy.clickOperation('/');
+    cy.clickDigit('4');
+    cy.clickOperation('=');
+    cy.get('#total').should('have.text', '-2');
+  })
 });
