@@ -12,8 +12,11 @@ export default class Calaulator {
   }
 
   bindEvents() {
-    this.digits.addEventListener('click', this.handleClickDigits.bind(this))
-    this.operations.addEventListener('click', this.handleClickOperations.bind(this));
+    this.digits.addEventListener('click', this.handleClickDigits.bind(this));
+    this.operations.addEventListener(
+      'click',
+      this.handleClickOperations.bind(this),
+    );
     this.ac.addEventListener('click', this.handleClickAC.bind(this));
   }
 
@@ -26,7 +29,8 @@ export default class Calaulator {
       return;
     }
 
-    total.textContent = totalValue === '0' ? digitValue : totalValue + digitValue;
+    total.textContent =
+      totalValue === '0' ? digitValue : totalValue + digitValue;
   }
 
   handleClickOperations(event) {
@@ -45,7 +49,7 @@ export default class Calaulator {
   }
 
   handleClickAC() {
-    total.textContent = '0'
+    total.textContent = '0';
   }
 
   calculate(calculatingTargets, operation) {
@@ -60,13 +64,15 @@ export default class Calaulator {
       case OPERATORS.MULTIPLY:
         return Number(leftValue) * Number(rightValue);
       case OPERATORS.DIVIDE:
-        return leftValue > 0 ? Math.floor(Number(leftValue) / Number(rightValue)) : Math.ceil(Number(leftValue) / Number(rightValue));
+        return leftValue > 0
+          ? Math.floor(Number(leftValue) / Number(rightValue))
+          : Math.ceil(Number(leftValue) / Number(rightValue));
     }
   }
 
   getOperator(totalValue) {
-    const withoutFirstTotalValue = totalValue.substring(1) 
-    for (const value of withoutFirstTotalValue) {
+    const withoutFirstTotalValues = totalValue.substring(1).split('');
+    return withoutFirstTotalValues.find((value) => {
       if (
         value === OPERATORS.ADD ||
         value === OPERATORS.SUBTRACT ||
@@ -74,7 +80,7 @@ export default class Calaulator {
         value === OPERATORS.DIVIDE
       )
         return value;
-    }
+    });
   }
 
   checkOverMaxDigits(totalValue, digitValue) {
@@ -87,9 +93,9 @@ export default class Calaulator {
   getCalculatingTargets(totalValue) {
     const eachNumbers = totalValue.split(/[X+-/_]/);
 
-    if(totalValue[0] === OPERATORS.SUBTRACT) {
+    if (totalValue[0] === OPERATORS.SUBTRACT) {
       eachNumbers.shift();
-      eachNumbers[0] = OPERATORS.SUBTRACT + eachNumbers[0]
+      eachNumbers[0] = OPERATORS.SUBTRACT + eachNumbers[0];
     }
 
     return eachNumbers;
