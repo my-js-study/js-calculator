@@ -55,6 +55,7 @@ export default class Calaulator {
 
   calculate(calculatingTargets, operation) {
     const [leftValue, rightValue] = calculatingTargets;
+    console.log(operation);
 
     switch (operation) {
       case OPERATORS.ADD:
@@ -64,7 +65,7 @@ export default class Calaulator {
       case OPERATORS.MULTIPLY:
         return Number(leftValue) * Number(rightValue);
       case OPERATORS.DIVIDE:
-        return Math.floor(Number(leftValue) / Number(rightValue));
+        return leftValue > 0 ? Math.floor(Number(leftValue) / Number(rightValue)) : Math.ceil(Number(leftValue) / Number(rightValue));
     }
   }
 
@@ -88,6 +89,13 @@ export default class Calaulator {
   }
 
   getCalculatingTargets(totalValue) {
-    return totalValue.split(/[X+-/_]/);
+    const eachNumbers = totalValue.split(/[X+-/_]/);
+
+    if(totalValue[0] === OPERATORS.SUBTRACT) {
+      eachNumbers.shift();
+      eachNumbers[0] = OPERATORS.SUBTRACT + eachNumbers[0]
+    }
+
+    return eachNumbers;
   }
 }
