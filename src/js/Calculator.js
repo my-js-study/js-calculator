@@ -18,20 +18,20 @@ export default class Calaulator {
   }
 
   handleClickDigits(event) {
-    const totalValue = total.innerText;
-    const digitValue = event.target.innerText;
+    const totalValue = total.textContent;
+    const digitValue = event.target.textContent;
 
     if (this.checkOverThreeDigits(totalValue, digitValue)) {
       alert(ERROR_MESSAGE.OVER_THREE_DIGITS);
       return;
     }
 
-    total.innerText = totalValue === '0' ? digitValue : totalValue + digitValue;
+    total.textContent = totalValue === '0' ? digitValue : totalValue + digitValue;
   }
 
   handleClickOperations(event) {
-    const totalValue = total.innerText;
-    const operationValue = event.target.innerText;
+    const totalValue = total.textContent;
+    const operationValue = event.target.textContent;
 
     if (totalValue === '0') {
       alert(ERROR_MESSAGE.NO_NUMBER);
@@ -42,15 +42,15 @@ export default class Calaulator {
       const calculatingTargets = this.getCalculatingTargets(totalValue);
       const operation = this.getOperator(totalValue);
       const result = this.calculate(calculatingTargets, operation);
-      total.innerText = result;
+      total.textContent = result;
       return;
     }
 
-    total.innerText = totalValue + operationValue;
+    total.textContent = totalValue + operationValue;
   }
 
   handleClickAC() {
-    total.innerText = '0'
+    total.textContent = '0'
   }
 
   calculate(calculatingTargets, operation) {
