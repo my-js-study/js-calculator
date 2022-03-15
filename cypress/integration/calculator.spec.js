@@ -2,7 +2,7 @@ import { ERROR_MESSAGE } from '../../src/js/constants';
 
 describe('계산기 초기 화면 테스트', () => {
   beforeEach(() => {
-    cy.visit('http://127.0.0.1:5500/index.html');
+    cy.visit('http://127.0.0.1:5500');
   });
 
   it('total의 초기 값은 0이다.', () => {
@@ -12,7 +12,7 @@ describe('계산기 초기 화면 테스트', () => {
 
 describe('계산기 기능 요구사항', () => {
   beforeEach(() => {
-    cy.visit('http://127.0.0.1:5500/index.html');
+    cy.visit('http://127.0.0.1:5500');
   });
 
   it('2개의 숫자에 대해 덧셈이 가능하다', () => {
@@ -77,7 +77,7 @@ describe('계산기 기능 요구사항', () => {
 
 describe('추가 요구사항', () => {
   beforeEach(() => {
-    cy.visit('http://127.0.0.1:5500/index.html');
+    cy.visit('http://127.0.0.1:5500');
   });
 
   it('음수 결과값에서 소수점을 버릴 때에는 버림이 아닌 올림을 한다.', () => {
