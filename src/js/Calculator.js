@@ -1,5 +1,5 @@
 import { ERROR_MESSAGE, MAX_DIGITS, OPERATORS } from './constants.js';
-import { on, $ } from './helpers.js';
+import { $ } from './helpers.js';
 
 export default class Calaulator {
   constructor() {
@@ -12,9 +12,9 @@ export default class Calaulator {
   }
 
   bindEvents() {
-    on(this.digits, 'click', this.handleClickDigits.bind(this))
-    on(this.operations, 'click', this.handleClickOperations.bind(this));
-    on(this.ac, 'click', this.handleClickAC.bind(this));
+    this.digits.addEventListener('click', this.handleClickDigits.bind(this))
+    this.operations.addEventListener('click', this.handleClickOperations.bind(this));
+    this.ac.addEventListener('click', this.handleClickAC.bind(this));
   }
 
   handleClickDigits(event) {

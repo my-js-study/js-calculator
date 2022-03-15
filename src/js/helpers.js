@@ -11,7 +11,3 @@ export function $$(selector, scope = document) {
 
   return Array.from(scope.querySelectorAll(selector));
 }
-
-export function on(target, eventName, handler) {
-  target.addEventListener(eventName, handler);
-}
