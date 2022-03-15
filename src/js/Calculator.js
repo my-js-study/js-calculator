@@ -70,7 +70,8 @@ export default class Calaulator {
   }
 
   getOperator(totalValue) {
-    for (const value of totalValue) {
+    const withoutFirstTotalValue = totalValue.substring(1) 
+    for (const value of withoutFirstTotalValue) {
       if (
         value === OPERATORS.ADD ||
         value === OPERATORS.SUBTRACT ||
