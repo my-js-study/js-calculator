@@ -88,5 +88,15 @@ describe('추가 요구사항', () => {
     cy.clickDigit('4');
     cy.clickOperation('=');
     cy.get('#total').should('have.text', '-2');
+  });
+
+  it('연속적인 계산을 처리한다.', () => {
+    cy.clickDigit('9');
+    cy.clickOperation('X');
+    cy.clickDigit('4');
+    cy.clickOperation('/');
+    cy.clickDigit('6');
+    cy.clickOperation('=');
+    cy.get('#total').should('have.text', '6');
   })
 });
