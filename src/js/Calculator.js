@@ -21,7 +21,7 @@ export default class Calaulator {
     const totalValue = total.textContent;
     const digitValue = event.target.textContent;
 
-    if (this.checkOverThreeDigits(totalValue, digitValue)) {
+    if (this.checkOverMaxDigits(totalValue, digitValue)) {
       alert(ERROR_MESSAGE.OVER_THREE_DIGITS);
       return;
     }
@@ -77,7 +77,7 @@ export default class Calaulator {
     }
   }
 
-  checkOverThreeDigits(totalValue, digitValue) {
+  checkOverMaxDigits(totalValue, digitValue) {
     const digitValues = this.getCalculatingTargets(totalValue);
     const target = digitValues[digitValues.length - 1];
 
