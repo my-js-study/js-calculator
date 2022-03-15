@@ -1,75 +1,70 @@
 import { ERROR_MESSAGE, MAX_DIGITS, OPERATORS } from './constants.js';
 import { $ } from './helpers.js';
 
-export default class Calaulator {
-  constructor() {
-    this.total = $('#total');
-    this.digits = $('.digits');
-    this.operations = $('.operations');
-    this.ac = $('.modifier');
+function Calculator() {
+  const total = $('#total');
+  const digits = $('.digits');
+  const operations = $('.operations');
+  const ac = $('.modifier');
 
-    this.isAlreadyTypeOperator = false;
+  let isAlreadyTypeOperator = false;
 
-    this.bindEvents();
-  }
+  bindEvents();
 
-  bindEvents() {
-    this.digits.addEventListener('click', this.handleClickDigits.bind(this));
-    this.operations.addEventListener(
-      'click',
-      this.handleClickOperations.bind(this),
-    );
-    this.ac.addEventListener('click', this.handleClickAC.bind(this));
-  }
+  function bindEvents() {
+    digits.addEventListener('click', handleClickDigits.bind(this));
+    operations.addEventListener('click', handleClickOperations.bind(this));
+    ac.addEventListener('click', handleClickAC.bind(this));
+  };
 
-  handleClickDigits(event) {
+  function handleClickDigits(event) {
     const totalValue = total.textContent;
     const digitValue = event.target.textContent;
 
-    if (this.checkOverMaxDigits(totalValue, digitValue)) {
+    if (checkOverMaxDigits(totalValue, digitValue)) {
       alert(ERROR_MESSAGE.OVER_THREE_DIGITS);
       return;
     }
 
     total.textContent =
       totalValue === '0' ? digitValue : totalValue + digitValue;
-  }
+  };
 
-  handleClickOperations(event) {
+  function handleClickOperations(event) {
     const totalValue = total.textContent;
     const operationValue = event.target.textContent;
 
-    if (this.isAlreadyTypeOperator && operationValue !== OPERATORS.EQUAL) {
-      const result = this.getCalculatedValue(totalValue);
+    if (isAlreadyTypeOperator && operationValue !== OPERATORS.EQUAL) {
+      const result = getCalculatedValue(totalValue);
       total.textContent = result + operationValue;
-      this.isAlreadyTypeOperator = false;
+      isAlreadyTypeOperator = false;
       return;
     }
 
-    this.isAlreadyTypeOperator = true;
+    isAlreadyTypeOperator = true;
 
     if (operationValue === OPERATORS.EQUAL) {
-      const result = this.getCalculatedValue(totalValue);
+      const result = getCalculatedValue(totalValue);
       total.textContent = result;
-      this.isAlreadyTypeOperator = false;
+      isAlreadyTypeOperator = false;
       return;
     }
 
     total.textContent = totalValue + operationValue;
-  }
+  };
 
-  getCalculatedValue(totalValue) {
-    const calculatingTargets = this.getCalculatingTargets(totalValue);
-    const operation = this.getOperator(totalValue);
-    const result = this.calculate(calculatingTargets, operation);
+  function getCalculatedValue(totalValue) {
+    const calculatingTargets = getCalculatingTargets(totalValue);
+    const operation = getOperator(totalValue);
+    const result = calculate(calculatingTargets, operation);
     return result;
-  }
+  };
 
-  handleClickAC() {
+  function handleClickAC() {
     total.textContent = '0';
-  }
+  };
 
-  calculate(calculatingTargets, operation) {
+  function calculate(calculatingTargets, operation) {
     const [leftValue, rightValue] = calculatingTargets;
 
     switch (operation) {
@@ -84,9 +79,9 @@ export default class Calaulator {
           ? Math.floor(Number(leftValue) / Number(rightValue))
           : Math.ceil(Number(leftValue) / Number(rightValue));
     }
-  }
+  };
 
-  getOperator(totalValue) {
+  function getOperator(totalValue) {
     const withoutFirstTotalValues = totalValue.substring(1).split('');
     return withoutFirstTotalValues.find((value) => {
       if (
@@ -97,16 +92,16 @@ export default class Calaulator {
       )
         return value;
     });
-  }
+  };
 
-  checkOverMaxDigits(totalValue, digitValue) {
-    const digitValues = this.getCalculatingTargets(totalValue);
+  function checkOverMaxDigits(totalValue, digitValue) {
+    const digitValues = getCalculatingTargets(totalValue);
     const target = digitValues[digitValues.length - 1];
 
     return (target + digitValue).length > MAX_DIGITS;
-  }
+  };
 
-  getCalculatingTargets(totalValue) {
+  function getCalculatingTargets(totalValue) {
     console.log(totalValue);
     const eachNumbers = totalValue.split(/[X+-/_]/);
 
@@ -116,5 +111,7 @@ export default class Calaulator {
     }
 
     return eachNumbers;
-  }
-}
+  };
+};
+
+export default Calculator;
