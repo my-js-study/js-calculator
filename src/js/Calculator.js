@@ -8,6 +8,8 @@ export default class Calaulator {
     this.operations = $('.operations');
     this.ac = $('.modifier');
 
+    this.isAlreadyTypeOperator = false;
+
     this.bindEvents();
   }
 
@@ -37,15 +39,30 @@ export default class Calaulator {
     const totalValue = total.textContent;
     const operationValue = event.target.textContent;
 
+    if (this.isAlreadyTypeOperator && operationValue !== OPERATORS.EQUAL) {
+      const result = this.getCalculatedValue(totalValue);
+      total.textContent = result + operationValue;
+      this.isAlreadyTypeOperator = false;
+      return;
+    }
+
+    this.isAlreadyTypeOperator = true;
+
     if (operationValue === OPERATORS.EQUAL) {
-      const calculatingTargets = this.getCalculatingTargets(totalValue);
-      const operation = this.getOperator(totalValue);
-      const result = this.calculate(calculatingTargets, operation);
+      const result = this.getCalculatedValue(totalValue);
       total.textContent = result;
+      this.isAlreadyTypeOperator = false;
       return;
     }
 
     total.textContent = totalValue + operationValue;
+  }
+
+  getCalculatedValue(totalValue) {
+    const calculatingTargets = this.getCalculatingTargets(totalValue);
+    const operation = this.getOperator(totalValue);
+    const result = this.calculate(calculatingTargets, operation);
+    return result;
   }
 
   handleClickAC() {
@@ -54,7 +71,6 @@ export default class Calaulator {
 
   calculate(calculatingTargets, operation) {
     const [leftValue, rightValue] = calculatingTargets;
-    console.log(operation);
 
     switch (operation) {
       case OPERATORS.ADD:
@@ -91,6 +107,7 @@ export default class Calaulator {
   }
 
   getCalculatingTargets(totalValue) {
+    console.log(totalValue);
     const eachNumbers = totalValue.split(/[X+-/_]/);
 
     if (totalValue[0] === OPERATORS.SUBTRACT) {
