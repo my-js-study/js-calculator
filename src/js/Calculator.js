@@ -75,9 +75,7 @@ function Calculator() {
       case OPERATORS.MULTIPLY:
         return Number(leftValue) * Number(rightValue);
       case OPERATORS.DIVIDE:
-        return leftValue > 0
-          ? Math.floor(Number(leftValue) / Number(rightValue))
-          : Math.ceil(Number(leftValue) / Number(rightValue));
+        return Math.trunc(Number(leftValue) / Number(rightValue));
     }
   };
 
