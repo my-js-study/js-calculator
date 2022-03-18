@@ -13,7 +13,13 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: 'module',
   },
+  plugins: ['prettier'],
   rules: {
-    'import/prefer-default-export': 'none',
+    'prettier/prettier': [
+      'error',
+      {
+        endOfLine: 'auto',
+      },
+    ],
   },
 };
