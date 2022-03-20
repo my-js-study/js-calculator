@@ -3,19 +3,35 @@ import { $ } from './helpers.js';
 
 function Calculator() {
   const total = $('#total');
-  const digits = $('.digits');
-  const operations = $('.operations');
-  const ac = $('.modifier');
 
   let isAlreadyTypeOperator = false;
 
   bindEvents();
 
   function bindEvents() {
-    digits.addEventListener('click', handleClickDigits.bind(this));
-    operations.addEventListener('click', handleClickOperations.bind(this));
-    ac.addEventListener('click', handleClickAC.bind(this));
-  };
+    $('#app').addEventListener('click', handleButtons.bind(this));
+  }
+
+  function handleButtons(event) {
+    const { className } = event.target;
+
+    switch (className) {
+      case 'digit': {
+        handleClickDigits(event);
+        break;
+      }
+      case 'operation': {
+        handleClickOperations(event);
+        break;
+      }
+      case 'modifier': {
+        handleClickAC(event);
+        break;
+      }
+      default:
+        throw new Error('해당 버튼에 이벤트가 설정되어 있지 않습니다.');
+    }
+  }
 
   function handleClickDigits(event) {
     const totalValue = total.textContent;
@@ -28,7 +44,7 @@ function Calculator() {
 
     total.textContent =
       totalValue === '0' ? digitValue : totalValue + digitValue;
-  };
+  }
 
   function handleClickOperations(event) {
     const totalValue = total.textContent;
@@ -51,18 +67,18 @@ function Calculator() {
     }
 
     total.textContent = totalValue + operationValue;
-  };
+  }
 
   function getCalculatedValue(totalValue) {
     const calculatingTargets = getCalculatingTargets(totalValue);
     const operation = getOperator(totalValue);
     const result = calculate(calculatingTargets, operation);
     return result;
-  };
+  }
 
   function handleClickAC() {
     total.textContent = '0';
-  };
+  }
 
   function calculate(calculatingTargets, operation) {
     const [leftValue, rightValue] = calculatingTargets;
@@ -76,8 +92,10 @@ function Calculator() {
         return Number(leftValue) * Number(rightValue);
       case OPERATORS.DIVIDE:
         return Math.trunc(Number(leftValue) / Number(rightValue));
+      default:
+        return 0;
     }
-  };
+  }
 
   function getOperator(totalValue) {
     const withoutFirstTotalValues = totalValue.substring(1).split('');
@@ -90,14 +108,14 @@ function Calculator() {
       )
         return value;
     });
-  };
+  }
 
   function checkOverMaxDigits(totalValue, digitValue) {
     const digitValues = getCalculatingTargets(totalValue);
     const target = digitValues[digitValues.length - 1];
 
     return (target + digitValue).length > MAX_DIGITS;
-  };
+  }
 
   function getCalculatingTargets(totalValue) {
     const eachNumbers = totalValue.split(/[X+-/_]/);
@@ -108,7 +126,7 @@ function Calculator() {
     }
 
     return eachNumbers;
-  };
-};
+  }
+}
 
 export default Calculator;
