@@ -50,23 +50,29 @@ function Calculator() {
     const totalValue = total.textContent;
     const operationValue = event.target.textContent;
 
-    if (isAlreadyTypeOperator && operationValue !== OPERATORS.EQUAL) {
-      const result = getCalculatedValue(totalValue);
-      total.textContent = result + operationValue;
-      isAlreadyTypeOperator = false;
-      return;
+    switch (operationValue) {
+      case OPERATORS.EQUAL: {
+        total.textContent = getCalculatedValue(totalValue);;
+        isAlreadyTypeOperator = false;
+        break;
+      }
+      case OPERATORS.ADD:
+      case OPERATORS.DIVIDE:
+      case OPERATORS.MULTIPLY:
+      case OPERATORS.SUBTRACT: {
+        if (isAlreadyTypeOperator) {
+          total.textContent = getCalculatedValue(totalValue) + operationValue;
+          isAlreadyTypeOperator = false;
+        } else {
+          isAlreadyTypeOperator = true;
+          total.textContent = totalValue + operationValue;
+        }
+        break;
+      }
+      default: {
+        break;
+      }
     }
-
-    isAlreadyTypeOperator = true;
-
-    if (operationValue === OPERATORS.EQUAL) {
-      const result = getCalculatedValue(totalValue);
-      total.textContent = result;
-      isAlreadyTypeOperator = false;
-      return;
-    }
-
-    total.textContent = totalValue + operationValue;
   }
 
   function getCalculatedValue(totalValue) {
