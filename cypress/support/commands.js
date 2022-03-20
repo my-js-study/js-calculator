@@ -31,3 +31,13 @@ Cypress.Commands.add('clickDigit', (number) => {
 Cypress.Commands.add('clickOperation', (operator) => {
   cy.get('.operation').contains(operator).click();
 });
+
+Cypress.Commands.add('calculate', (formula) => {
+  formula.split('').forEach((value) => {
+    if (Number.isNaN(Number(value))) {
+      cy.get('.operation').contains(value).click();
+    } else {
+      cy.get('.digit').contains(value).click();
+    }
+  })
+})
