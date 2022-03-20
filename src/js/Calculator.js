@@ -29,7 +29,7 @@ function Calculator() {
         break;
       }
       default:
-        throw new Error('해당 버튼에 이벤트가 설정되어 있지 않습니다.');
+        break;
     }
   }
 
