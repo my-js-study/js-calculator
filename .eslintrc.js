@@ -21,5 +21,7 @@ module.exports = {
         endOfLine: 'auto',
       },
     ],
+    'import/extensions': 'off',
+    'no-alert': 'off',
   },
 };
